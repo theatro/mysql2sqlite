@@ -186,7 +186,9 @@ aInc == 1 && /PRIMARY KEY|primary key/ { next }
   gsub( /(ON|on) (UPDATE|update) (CURRENT_TIMESTAMP|current_timestamp)(\(\))?/, "" )
   gsub( /(DEFAULT|default) (CURRENT_TIMESTAMP|current_timestamp)(\(\))?/, "DEFAULT current_timestamp")
   gsub( /(COLLATE|collate) [^ ]+ /, "" )
-  gsub( /(ENUM|enum)[^)]+\)/, "text " )
+  # FIXME Theatro - ENUM not in use in sql file in question, so skip the false positives.
+  # https://github.com/dumblob/mysql2sqlite/issues/51
+  #gsub( /(ENUM|enum)[^)]+\)/, "text " )
   gsub( /(SET|set)\([^)]+\)/, "text " )
   gsub( /UNSIGNED|unsigned/, "" )
   gsub( /` [^ ]*(INT|int|BIT|bit)[^ ]*/, "` integer" )
